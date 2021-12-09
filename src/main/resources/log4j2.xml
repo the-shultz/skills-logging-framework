@@ -5,12 +5,19 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%msg%n"/>
         </Console>
+
+        <File name="aFileAppender" fileName="logs/test.log">
+            <PatternLayout>
+                <Pattern>%msg%n</Pattern>
+            </PatternLayout>
+        </File>
     </Appenders>
 
     <Loggers>
 
         <logger name="industry.skills.logs.example.basic.AClassThatDoesSomething" level="debug">
             <AppenderRef ref="Console"/>
+            <AppenderRef ref="aFileAppender"/>
         </logger>
 
         <logger name="industry.skills.logs.example.basic.Main" level="info">
