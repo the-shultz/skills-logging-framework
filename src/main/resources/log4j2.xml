@@ -19,6 +19,12 @@
             </PatternLayout>
         </File>
 
+        <File name="allLogsFile" fileName="logs/all.log" append="false">
+            <PatternLayout>
+                <Pattern>%d{HH:mm:ss.SSS} [%t] %-5p %logger - %msg%n</Pattern>
+            </PatternLayout>
+        </File>
+
     </Appenders>
 
     <Loggers>
@@ -29,12 +35,19 @@
         </logger>
 
         <!--due to additivity=false these logs will NOT be printed to console-->
-        <logger name="industry.skills.logs.example.advance.sort" level="TRACE" additivity="false">
+        <logger name="industry.skills.logs.example.advance.sort" level="TRACE" additivity="true">
             <AppenderRef ref="sorterAppender"/>
         </logger>
 
         <logger name="industry.skills.logs.example.advance.MainSorter" level="INFO" dditivity="false">
             <AppenderRef ref="Console"/>
+        </logger>
+
+        <!--this logger definition stands as a base for creator and sorter, but due to additivity false it prevents the loggers
+            to move upper in the inheritance chain. so it also adds here the console appender-->
+        <logger name="industry.skills.logs.example.advance" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="allLogsFile"/>
         </logger>
 
         <Root level="INFO">
