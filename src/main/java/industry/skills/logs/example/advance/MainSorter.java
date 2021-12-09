@@ -4,14 +4,17 @@ import industry.skills.logs.example.advance.creator.CollectionCreator;
 import industry.skills.logs.example.advance.sort.SortCollection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.ThreadContext;
 
 
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Collection;
+import java.util.UUID;
 
 public class MainSorter {
 
+    public static final String UNIQUE_IDENTIFIER = "UNIQUE-IDENTIFIER";
     private static Logger log = LogManager.getLogger(MainSorter.class);
 
     public static void main(String[] args) {
@@ -21,15 +24,21 @@ public class MainSorter {
         Collection<Integer> integersCollection = intsCreator.create(10);
         log.info("Created integers: " + integersCollection);
 
-        // test by bubble sort
-        testBubbleSort(integersCollection);
+        for (int i = 1; i <= 5; i++) {
+            ThreadContext.push(String.valueOf(i));
+            ThreadContext.put(UNIQUE_IDENTIFIER, UUID.randomUUID().toString());
+            // test by bubble sort
+            testBubbleSort(integersCollection);
 
-        // test by native collection sort
-        testNativeCollectionSort(integersCollection);
+            // test by native collection sort
+            testNativeCollectionSort(integersCollection);
 
-        // test by native stream sort
-        testNativeStreamSort(integersCollection);
+            // test by native stream sort
+            testNativeStreamSort(integersCollection);
 
+            ThreadContext.pop();
+        }
+        ThreadContext.clearAll();
     }
 
     private static void testNativeStreamSort(Collection<Integer> integersCollection1) {
