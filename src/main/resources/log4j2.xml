@@ -3,7 +3,9 @@
 
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%msg%n"/>
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5p %logger - %msg%n"/>
+            <!--<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] [[%C - %L - %M - %F]]  %-5p %logger - %msg%n"/>-->
+            <!--<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] [[%l]]  %-5p %logger - %msg%n"/>-->
         </Console>
 
         <File name="aFileAppender" fileName="logs/test.log">
