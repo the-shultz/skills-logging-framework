@@ -9,8 +9,15 @@
 
     <Loggers>
 
-        <Root level="trace">
+        <logger name="industry.skills.logs.example.basic.AClassThatDoesSomething" level="debug">
             <AppenderRef ref="Console"/>
+        </logger>
+
+        <logger name="industry.skills.logs.example.basic.Main" level="info">
+            <AppenderRef ref="Console"/>
+        </logger>
+
+        <Root level="FATAL">
         </Root>
 
     </Loggers>
