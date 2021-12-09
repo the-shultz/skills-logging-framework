@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="WARN">
+<Configuration status="warn" monitorInterval="5">
 
     <Appenders>
 
-        <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5p #%x(%X{UNIQUE-IDENTIFIER}) %logger - %msg%n"/>
-        </Console>
 
         <File name="creatorAppender" fileName="logs/creator.log" append="false">
             <PatternLayout>
@@ -25,28 +22,24 @@
             </PatternLayout>
         </File>
 
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5p #%x(%X{UNIQUE-IDENTIFIER}) %logger - %msg%n"/>
+        </Console>
+
+        <Async name="Async">
+            <AppenderRef ref="Console"/>
+        </Async>
     </Appenders>
 
     <Loggers>
 
-        <!--due to additivity=true (the default) these logs will also be printed to console as well due to the root-->
-        <logger name="industry.skills.logs.example.advance.creator" level="DEBUG" additivity="true">
-            <AppenderRef ref="creatorAppender"/>
-        </logger>
-
-        <!--due to additivity=false these logs will NOT be printed to console-->
-        <logger name="industry.skills.logs.example.advance.sort" level="DEBUG" additivity="true">
-            <AppenderRef ref="sorterAppender"/>
+        <logger name="industry.skills.logs.example.advance" level="TRACE" additivity="false">
+            <!--<AppenderRef ref="Console"/>-->
+            <AppenderRef ref="Async"/>
         </logger>
 
         <logger name="industry.skills.logs.example.advance.MainSorter" level="INFO" additivity="false">
             <AppenderRef ref="Console"/>
-        </logger>
-
-        <!--this logger definition stands as a base for creator and sorter, but due to additivity false it prevents the loggers
-            to move upper in the inheritance chain. so it also adds here the console appender-->
-        <logger name="industry.skills.logs.example.advance" additivity="false">
-            <AppenderRef ref="allLogsFile"/>
         </logger>
 
         <Root level="INFO">

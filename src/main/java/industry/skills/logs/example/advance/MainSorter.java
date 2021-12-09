@@ -21,24 +21,39 @@ public class MainSorter {
         CollectionCreator<Integer> intsCreator = CollectionCreator.get(Integer.class);
         log.debug("Created ints creator successfully...");
 
-        Collection<Integer> integersCollection = intsCreator.create(10);
-        log.info("Created integers: " + integersCollection);
+        Instant start = Instant.now();
+        createAndCompareSort(intsCreator, 1, 1000);
+        Instant end = Instant.now();
+        log.info("Executing 1000 array bubble sort took " + Duration.between(start, end).getSeconds());
 
-        for (int i = 1; i <= 5; i++) {
-            ThreadContext.push(String.valueOf(i));
-            ThreadContext.put(UNIQUE_IDENTIFIER, UUID.randomUUID().toString());
-            // test by bubble sort
-            testBubbleSort(integersCollection);
-
-            // test by native collection sort
-            testNativeCollectionSort(integersCollection);
-
-            // test by native stream sort
-            testNativeStreamSort(integersCollection);
-
-            ThreadContext.pop();
-        }
         ThreadContext.clearAll();
+    }
+
+    private static void createAndCompareSort(CollectionCreator<Integer> intsCreator, int iteration, int size) {
+        ThreadContext.push(String.valueOf(iteration));
+        ThreadContext.put(UNIQUE_IDENTIFIER, UUID.randomUUID().toString());
+
+        Collection<Integer> integersCollection = intsCreator.create(size);
+        log.info("Created integers: " + integersCollection);
+        // test by bubble sort
+        testBubbleSort(integersCollection);
+
+        // test by native collection sort
+        testNativeCollectionSort(integersCollection);
+
+        // test by native stream sort
+        testNativeStreamSort(integersCollection);
+
+        log.info("================================");
+        ThreadContext.pop();
+    }
+
+    private static void sleepForAWhile(int time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void testNativeStreamSort(Collection<Integer> integersCollection1) {

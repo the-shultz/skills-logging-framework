@@ -28,5 +28,13 @@
             <artifactId>log4j-core</artifactId>
             <version>${log4j2-version}</version>
         </dependency>
+
+        <!--used for the asynchronous logger-->
+        <dependency>
+            <groupId>com.lmax</groupId>
+            <artifactId>disruptor</artifactId>
+            <version>3.3.4</version>
+        </dependency>
+
     </dependencies>
 </project>
