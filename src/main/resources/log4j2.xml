@@ -7,6 +7,10 @@
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5p #%x(%X{UNIQUE-IDENTIFIER}) %logger - %msg%n"/>
         </Console>
 
+        <Console name="Log4jExample" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5p %msg%n"/>
+        </Console>
+
         <File name="creatorAppender" fileName="logs/creator.log" append="false">
             <PatternLayout>
                 <Pattern>%d{HH:mm:ss.SSS} [%t] %-5p %logger - %msg%n</Pattern>
@@ -47,6 +51,10 @@
             to move upper in the inheritance chain. so it also adds here the console appender-->
         <logger name="industry.skills.logs.example.advance" additivity="false">
             <AppenderRef ref="allLogsFile"/>
+        </logger>
+
+        <logger name="industry.skills.logs.example.lookup" additivity="false" level="INFO">
+            <AppenderRef ref="Log4jExample"/>
         </logger>
 
         <Root level="INFO">
